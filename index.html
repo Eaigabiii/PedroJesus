@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planejamento de Investimento | Pedro Jesus</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'r-dark': '#151F1D',      /* Fundo Principal */
+                        'r-card': '#1A2623',      /* Fundo de Cartões */
+                        'r-gold': '#C5A059',      /* Dourado da Marca */
+                        'r-green': '#00D26A',     /* Verde Destaque */
+                        'r-red': '#FF5C5C',       /* Destaque Vermelho */
+                        'r-text': '#E5E5E5',      /* Texto Claro */
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        body { background-color: #151F1D; color: #E5E5E5; font-family: 'Montserrat', sans-serif; }
+        
+        .brand-logo {
+            max-width: 180px;
+            height: auto;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+
+        .r-table { width: 100%; border-collapse: collapse; }
+        .r-table th {
+            background-color: #111816;
+            color: #C5A059;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            padding: 1.5rem 1rem;
+            border-bottom: 1px solid #2A3835;
+        }
+        .r-table td {
+            padding: 1.25rem 1rem;
+            border-bottom: 1px solid #2A3835;
+            font-size: 0.9rem;
+            color: #B0C4C0;
+            text-align: center;
+        }
+        .r-table td:first-child { text-align: left; font-weight: 600; color: #E5E5E5; padding-left: 2rem; }
+        .r-table tr:last-child td { border-bottom: none; }
+
+        .demand-card:hover {
+            transform: translateY(-5px);
+            border-color: #C5A059;
+        }
+        
+        /* Map Pin Style */
+        .map-pin {
+            background-color: white;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .map-pin-inner {
+            transform: rotate(45deg);
+            background-color: #151F1D;
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 800;
+        }
+        .map-label {
+            position: absolute;
+            background: transparent;
+            color: white;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <!-- HERO SECTION -->
+    <header class="relative h-screen flex flex-col items-center justify-center text-center overflow-hidden border-b-4 border-r-gold/20">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" 
+                 class="w-full h-full object-cover opacity-20 grayscale" alt="Building Portfolio">
+            <div class="absolute inset-0 bg-[#151F1D] opacity-80"></div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-5xl px-6 flex flex-col items-center">
+            <div class="mb-12">
+                <img src="https://i.ibb.co/ZRzRJBwq/LOGO-COLORIDO-REFER-NCIA-CAPITAL-1.png" alt="Referência Capital" class="brand-logo">
+            </div>
+
+            <div class="w-full flex items-center justify-center gap-6 mb-6">
+                <div class="h-[1px] bg-r-gold w-1/4 opacity-60"></div>
+                <div class="h-[1px] bg-r-gold w-1/4 opacity-60"></div>
+            </div>
+            <p class="text-r-gold uppercase tracking-[0.4em] font-bold text-sm mb-4">Planejamento Estratégico</p>
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white uppercase tracking-wider mb-4 drop-shadow-lg">
+                Pedro Jesus
+            </h1>
+            <p class="text-gray-300 text-lg uppercase tracking-widest mt-4">Portfólio Diversificado: SP & Nordeste</p>
+        </div>
+    </header>
+
+    <!-- OBJETIVO DO PROJETO -->
+    <section class="relative py-32 bg-[#1A2623] border-b-2 border-r-gold/30">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" 
+                 class="w-full h-full object-cover opacity-10 mix-blend-overlay" alt="Office">
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10 max-w-5xl text-center md:text-left">
+            <h3 class="text-3xl font-extrabold text-white mb-8">Objetivo do Projeto:</h3>
+            <p class="text-2xl md:text-3xl font-bold text-r-gold leading-normal">
+                CONSTRUIR UMA <span class="text-r-green">RENDA PASSIVA VITALÍCIA</span> COM IMÓVEIS DE ALTA PERFORMANCE PARA LOCAÇÃO, DIVERSIFICANDO ENTRE O CENTRO FINANCEIRO DE SP E O TURISMO DE LUXO DO NORDESTE, ADQUIRIDOS COM <span class="text-r-green">ALAVANCAGEM PATRIMONIAL</span> SEGURA.
+            </p>
+        </div>
+    </section>
+
+    <!-- MAPA DE IMÓVEIS (3 Pinos) -->
+    <section class="py-24 bg-[#151F1D] relative">
+        <div class="container mx-auto px-6 relative z-10 max-w-6xl">
+            <div class="text-center mb-12">
+                <h2 class="text-5xl font-display font-bold text-white uppercase tracking-widest">Portfólio</h2>
+                <p class="text-gray-400 mt-2">Diversificação Geográfica Estratégica</p>
+            </div>
+
+            <div class="relative w-full h-[650px] bg-[#1A2623] rounded-3xl border border-white/5 shadow-2xl flex items-center justify-center overflow-hidden">
+                <img src="https://mundocolorirdesenhos.com.br/wp-content/uploads/2024/10/mapa_politico_do_brasil_divisao_estados_desenhos_para_colorir_pintar_imprimir-1-1024x1024.jpg" 
+                     alt="Mapa do Brasil" 
+                     class="w-full h-full object-contain p-4 invert opacity-80 mix-blend-screen">
+
+                <!-- Pin 1: Maragogi (Tulum) -->
+                <div class="absolute top-[35%] right-[8%] flex flex-row-reverse items-center gap-3 z-30 group animate-pulse">
+                    <div class="map-pin relative z-10 bg-r-gold border-2 border-white scale-100 group-hover:scale-125 transition-transform"><div class="map-pin-inner bg-[#151F1D] text-r-gold">PJ</div></div>
+                    <span class="map-label pr-2 opacity-0 group-hover:opacity-100 transition-opacity bg-[#151F1D]/90 px-3 py-2 rounded border border-r-gold/50 text-r-gold shadow-xl">Maragogi - Max Tulum</span>
+                </div>
+
+                <!-- Pin 2: São Miguel (Cocoon) -->
+                <div class="absolute top-[39%] right-[9%] flex flex-row-reverse items-center gap-3 z-20 group hover:z-40">
+                    <div class="map-pin relative z-10 scale-100 group-hover:scale-125 transition-transform"><div class="map-pin-inner">PJ</div></div>
+                    <span class="map-label pr-2 opacity-0 group-hover:opacity-100 transition-opacity bg-[#151F1D]/80 px-2 py-1 rounded border border-white/10">São Miguel - Cocoon</span>
+                </div>
+
+                <!-- Pin 3: Pinheiros (Vitacon) -->
+                <div class="absolute bottom-[27%] right-[30%] flex flex-row items-center gap-3 z-20 group hover:z-40">
+                    <div class="map-pin relative z-10 scale-100 group-hover:scale-125 transition-transform"><div class="map-pin-inner">PJ</div></div>
+                    <div class="absolute w-3 h-3 bg-white rounded-full animate-ping opacity-75 left-2 top-2"></div>
+                    <span class="map-label pl-2 opacity-0 group-hover:opacity-100 transition-opacity bg-[#151F1D]/80 px-2 py-1 rounded border border-white/10">SP - Vitacon Pinheiros</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CENÁRIOS DE INVESTIMENTO -->
+    <section class="py-24 bg-[#151F1D] border-t border-white/5">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="text-center mb-8">
+                <span class="text-r-gold text-xs uppercase tracking-[0.2em] font-bold">Análise de Mercado</span>
+                <h2 class="text-5xl font-display text-white mt-3 mb-4">Cenários de Investimento</h2>
+            </div>
+            
+            <div class="overflow-hidden rounded-lg border border-white/10 shadow-2xl bg-[#111816]">
+                <table class="r-table">
+                    <thead>
+                        <tr>
+                            <th>Indicador</th>
+                            <th>Max Tulum (AL)</th>
+                            <th>Cocoon (AL)</th>
+                            <th>Vitacon Pinheiros (SP)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Valor do Imóvel</td>
+                            <td>R$ 339.900,00</td>
+                            <td>R$ 550.000,00</td>
+                            <td>R$ 491.433,15</td>
+                        </tr>
+                        <tr>
+                            <td>Valorização Est. (Obra)</td>
+                            <td class="text-r-green font-bold">~47%</td>
+                            <td class="text-r-green font-bold">50%</td>
+                            <td class="text-r-green font-bold">30%</td>
+                        </tr>
+                        <tr>
+                            <td>Valor Investido (Obra)</td>
+                            <td>R$ 129.000,00</td>
+                            <td>R$ 219.999,99</td>
+                            <td>R$ 146.500,01</td>
+                        </tr>
+                        <tr>
+                            <td>Ganho Patrimonial</td>
+                            <td class="text-white font-bold">R$ 160.500,00</td>
+                            <td class="text-white font-bold">R$ 275.000,00</td>
+                            <td class="text-white font-bold">R$ 147.429,95</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #C5A059;">ROI Total Estimado</td>
+                            <td class="text-white font-bold">~124%</td>
+                            <td class="text-white font-bold">~125%</td>
+                            <td class="text-white font-bold">~100%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-12 text-center">
+                <h3 class="text-2xl text-white uppercase font-bold tracking-wide">GANHO PATRIMONIAL TOTAL: <span class="text-r-green font-extrabold">R$ 582.929,95</span></h3>
+                <p class="text-xs text-gray-500 mt-2 uppercase tracking-wide opacity-60">Estimado (Soma dos 3 cenários)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FLUXO DE PAGAMENTO COMPARATIVO (ATUALIZADO) -->
+    <section id="investimento" class="py-24 bg-[#1A2623] relative border-t border-white/5">
+        <div class="container mx-auto px-6 relative z-10 max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-white mb-4">Fluxo de Pagamento</h2>
+                <p class="text-gray-400 text-sm">Detalhamento dos aportes durante o período de obras.</p>
+            </div>
+
+            <div class="overflow-hidden rounded-lg border border-white/10 shadow-2xl bg-[#151F1D]">
+                <table class="r-table">
+                    <thead>
+                        <tr>
+                            <th class="text-left pl-8">Item</th>
+                            <th>Max Tulum</th>
+                            <th>Cocoon</th>
+                            <th>Pinheiros</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Entrada</td>
+                            <td class="text-white font-bold">R$ 35.000,00</td>
+                            <td class="text-white font-bold">R$ 49.333,33</td>
+                            <td class="text-white font-bold">R$ 49.100,00</td>
+                        </tr>
+                        <tr>
+                            <td>Mensais</td>
+                            <td class="text-gray-300">R$ 2.000,00</td>
+                            <td class="text-gray-300">R$ 5.006,67</td>
+                            <td class="text-gray-300">R$ 700,00</td>
+                        </tr>
+                        <tr>
+                            <td>Intermediárias / Outros</td>
+                            <td class="text-gray-300">R$ 54.000,00 (Total)</td>
+                            <td class="text-gray-300">R$ 49.333,33 (Anual)</td>
+                            <td class="text-gray-300">R$ 24.600,00 (Total)</td>
+                        </tr>
+                        <tr class="bg-[#111816]">
+                            <td>Chaves / Financ.</td>
+                            <td class="text-gray-400">R$ 266.919,00</td>
+                            <td class="text-gray-400">R$ 330.000,01</td>
+                            <td class="text-gray-400">R$ 344.933,15</td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-r-gold font-bold">INVESTIMENTO OBRA</span></td>
+                            <td class="text-r-gold">R$ 129.000,00</td>
+                            <td class="text-r-gold">R$ 219.999,99</td>
+                            <td class="text-r-gold">R$ 146.500,01</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- CUSTOS & DESPESAS -->
+    <section class="py-24 bg-[#111816] border-t border-white/5">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="text-center mb-12">
+                <span class="text-r-gold text-xs uppercase tracking-[0.2em] font-bold">Transparência Total</span>
+                <h2 class="text-5xl font-display text-white mt-3">Custos & Despesas Adicionais</h2>
+            </div>
+            <div class="overflow-hidden rounded-lg border border-white/10 shadow-2xl bg-[#151F1D]">
+                <table class="r-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Max Tulum</th>
+                            <th>Cocoon</th>
+                            <th>Pinheiros</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div class="font-bold text-white">Escritura, registro e ITBI</div><div class="text-[10px] text-gray-500 mt-1 opacity-70">Estimado em ~5%</div></td>
+                            <td>R$ 17.000,00</td>
+                            <td>R$ 27.500,00</td>
+                            <td>R$ 25.000,00</td>
+                        </tr>
+                        <tr>
+                            <td>Mobília e Decoração</td>
+                            <td>R$ 65.000,00</td>
+                            <td>R$ 95.000,00</td>
+                            <td>R$ 75.000,00</td>
+                        </tr>
+                        <tr>
+                            <td>Consultoria Imobiliária</td>
+                            <td class="text-r-gold font-bold">ISENTO</td>
+                            <td class="text-r-gold font-bold">ISENTO</td>
+                            <td class="text-r-gold font-bold">ISENTO</td>
+                        </tr>
+                        <tr class="bg-[#111816]">
+                            <td>Total (Doc. + Mobília)</td>
+                            <td class="font-bold">R$ 82.000,00</td>
+                            <td class="font-bold">R$ 122.500,00</td>
+                            <td class="font-bold">R$ 100.000,00</td>
+                        </tr>
+                        <tr>
+                            <td><div class="font-bold text-r-red">Investimento Total Estimado</div><div class="text-[10px] text-gray-500 mt-1 opacity-70">Obra + Doc. + Mobília</div></td>
+                            <td class="text-r-red font-bold text-lg">R$ 211.000,00</td>
+                            <td class="text-r-red font-bold text-lg">R$ 342.499,99</td>
+                            <td class="text-r-red font-bold text-lg">R$ 246.500,01</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- MOODBOARD INVESTIMENTO -->
+    <section class="py-12 bg-[#111816] flex justify-center">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <h3 class="text-center text-white font-bold uppercase tracking-widest mb-6">Moodboard do Investimento</h3>
+            <img src="https://i.ibb.co/wDPt63J/Whats-App-Image-2025-12-15-at-08-54-11.jpg" alt="Moodboard Investimento" class="w-full rounded-2xl shadow-2xl border border-r-gold/30">
+        </div>
+    </section>
+
+    <!-- PLANEJAMENTO FINAL -->
+    <section class="py-24 bg-[#1A2623] relative border-t border-r-gold/30">
+        <div class="container mx-auto px-6 text-center max-w-4xl">
+            <div class="flex justify-center mb-8"><div class="brand-r scale-75">R</div></div>
+            
+            <h2 class="text-4xl font-extrabold text-white uppercase tracking-widest mb-16">Planejamento Consolidado</h2>
+
+            <div class="flex flex-col items-center gap-4 mb-16">
+                <i class="fa-solid fa-house-chimney text-5xl text-white border-2 border-white p-4 rounded-lg"></i>
+                <p class="text-white font-bold uppercase tracking-wider text-xl">3 Imóveis na Planta</p>
+            </div>
+
+            <h3 class="text-3xl font-bold text-white uppercase tracking-widest mb-12">Investimento Inicial Total</h3>
+
+            <div class="flex flex-col md:flex-row justify-center items-center gap-12 bg-[#151F1D] p-12 rounded-xl border border-white/5 shadow-2xl">
+                <i class="fa-solid fa-pen-ruler text-6xl text-white"></i>
+                <div class="text-left">
+                    <div class="mb-6">
+                        <p class="text-gray-400 uppercase text-sm font-bold mb-1">Entrada Consolidada (3 Imóveis):</p>
+                        <p class="text-4xl font-bold text-white">R$ 133.433,33</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 uppercase text-sm font-bold mb-1">Parcela Mensal Total:</p>
+                        <p class="text-4xl font-bold text-white">R$ 7.706,67</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROPOSTA VÁLIDA -->
+    <section id="proposta" class="relative py-32 bg-[#151F1D] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" 
+                 class="w-full h-full object-cover opacity-30 grayscale mix-blend-multiply" alt="Meeting Room">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#151F1D] via-transparent to-[#151F1D]"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-6">
+            <div class="flex justify-center mb-8"><div class="brand-r scale-100 border-white text-white">R</div></div>
+            <h2 class="text-4xl md:text-6xl font-extrabold text-white uppercase tracking-wider mb-4 drop-shadow-2xl">Proposta Válida Por 48H</h2>
+            <p class="text-3xl font-bold text-white mb-12">Bons negócios!</p>
+            <div class="text-6xl text-white opacity-80 mb-12 animate-pulse"><i class="fa-regular fa-handshake"></i></div>
+        </div>
+    </section>
+
+    <!-- FOOTER STRIP -->
+    <footer class="bg-[#111816] border-t-4 border-r-gold">
+        <div class="container mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center text-sm md:text-base">
+            <div class="text-white font-bold mb-4 md:mb-0 text-center md:text-left">
+                <img src="https://i.ibb.co/ZRzRJBwq/LOGO-COLORIDO-REFER-NCIA-CAPITAL-1.png" alt="Referência Capital" class="brand-logo mb-4">
+                <p>Vanessa Corrêa | +55 61 99164-8121</p>
+                <p class="text-gray-400 font-normal mt-1">vanessa.ingrid@referenciaimob.com.br</p>
+            </div>
+            <div class="text-center md:text-right">
+                <a href="https://referenciacapital.com.br" target="_blank" class="text-white hover:text-r-gold transition border-b border-transparent hover:border-r-gold pb-1">
+                    Site: https://referenciacapital.com.br
+                </a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
